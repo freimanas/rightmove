@@ -128,12 +128,14 @@ def scrape_individual_house(house_url):
 # Gather list of results for an individual station. 
 def scrape_results_page(results_url, initial=False):
     results_url = DOMAIN + results_url
+    print 'Going to scrape results page: %s' % results_url
     html = scraperwiki.scrape(results_url)
     parser = etree.HTMLParser()
     tree = etree.parse(StringIO.StringIO(html), parser)
     house_links = tree.xpath('//ol[@id="summaries"]//a[starts-with(text(), "More details")]/@href')
+    print 'Parsed following links: %s' % house_links
     for house_link in house_links:
-        print 'Processing %s' % house_link
+        print 'Processing house: %s' % house_link
         scrape_individual_house(house_link)
     if initial:
         results_links = tree.xpath('//ul[@class="items"]//a/@href')
@@ -160,6 +162,6 @@ url3 = '&displayPropertyType=houses&oldDisplayPropertyType=houses&includeSSTC=tr
 
 # displayPropertyType=detachedshouses
 INITIAL_URL = url1 + url2 + url3
-print 'Scraping %s' % INITIAL_URL
+#print 'Scraping %s' % INITIAL_URL
 scrape_results_page(INITIAL_URL, initial=True)
        
