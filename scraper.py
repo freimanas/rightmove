@@ -133,6 +133,7 @@ def scrape_results_page(results_url, initial=False):
     tree = etree.parse(StringIO.StringIO(html), parser)
     house_links = tree.xpath('//ol[@id="summaries"]//a[starts-with(text(), "More details")]/@href')
     for house_link in house_links:
+        print 'Processing %s' % house_link
         scrape_individual_house(house_link)
     if initial:
         results_links = tree.xpath('//ul[@class="items"]//a/@href')
