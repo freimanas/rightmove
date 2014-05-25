@@ -158,7 +158,7 @@ url2 = 'minPrice=%s&maxPrice=%s' % (MIN_PRICE, MAX_PRICE)
 url3 = '&displayPropertyType=houses&oldDisplayPropertyType=houses&includeSSTC=true&_includeSSTC=on&googleAnalyticsChannel=buying'
 
 # displayPropertyType=detachedshouses
-INITIAL_URL = url1 + url2 + URL3
+INITIAL_URL = url1 + url2 + url3
 print 'Scraping %s' % initial_url
 scrape_results_page(INITIAL_URL, initial=True)
        
