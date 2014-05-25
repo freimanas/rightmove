@@ -69,12 +69,12 @@ stop_phrases = [ "views over the garden",
 "views over rear aspect", "views over front aspect",
 "views over the rear aspect", "views over the front aspect",
 "views over side aspect", "views over the side aspect",
-"1970s",  "bungalow", "bunaglow",
+"1970s",  
 "views to the front garden", "views to the rear garden" ]
 # "semi detached", "semi-detached", "semidetached",
 DOMAIN = 'http://www.rightmove.co.uk' 
 
-def scrape_individual_house(house_url, town):
+def scrape_individual_house(house_url):
     HOUSE_URL = (DOMAIN + house_url).split('/svr/')[0]
     #print 'Scraping %s' % HOUSE_URL
     house_html = scraperwiki.scrape(HOUSE_URL)
@@ -107,7 +107,7 @@ def scrape_individual_house(house_url, town):
             map_img = tostring(house_tree.xpath('//a[@id="minimapwrapper"]/img')[0])
         else:
             map_img = ''
-        house['title'] = "%s - %s, %s, %s from station" % (title, town, price, distance)
+        house['title'] = "%s - %s, %s from station" % (title, price, distance)
         #print 'HOUSE FOUND! %s, %s ' % (house['title'], HOUSE_URL)
         item_text = '<a href="' + HOUSE_URL + '">' + image_url + '</a>'
         #item_text += '<div style="position:relative;">'
@@ -126,28 +126,42 @@ def scrape_individual_house(house_url, town):
         scraperwiki.sqlite.save(['link'], house)
 
 # Gather list of results for an individual station. 
-def scrape_results_page(results_url, town, initial=False):
+def scrape_results_page(results_url, initial=False):
     results_url = DOMAIN + results_url
     html = scraperwiki.scrape(results_url)
     parser = etree.HTMLParser()
     tree = etree.parse(StringIO.StringIO(html), parser)
     house_links = tree.xpath('//ol[@id="summaries"]//a[starts-with(text(), "More details")]/@href')
     for house_link in house_links:
-        scrape_individual_house(house_link, town)
+        scrape_individual_house(house_link)
     if initial:
         results_links = tree.xpath('//ul[@class="items"]//a/@href')
         for r in results_links:
-            scrape_results_page(r, town)
+            scrape_results_page(r)
 
 scrape_individual_house('/property-for-sale/property-33036143.html/svr/3113','Castle Cary')
 
 # Go through each station: scrape each set of results in turn. 
-for station in stations:
-    station_name = station.keys()[0].title()
+
+#for station in stations:
+#    station_name = station.keys()[0].title()
+#    print 'Scraping %s' % station_name
+#    station_id = station.values()[0]
+#    url1 = '/property-for-sale/find.html?locationIdentifier=STATION^%s&minPrice=%s&maxPrice=%s' % (station_id, MIN_PRICE, MAX_PRICE)
+#    url2 = '&minBedrooms=%s&displayPropertyType=houses&oldDisplayPropertyType=houses&radius=%s' % (MIN_BEDROOMS, RADIUS_MILES)
+#    # displayPropertyType=detachedshouses
+#    INITIAL_URL = url1 + url2
+#    scrape_results_page(INITIAL_URL, town=station_name, initial=True)
+ 
+ url1 = '/property-for-sale/find.html?locationIdentifier=REGION%5E399&sortType=1&'
+ url2 = 'minPrice=%s&maxPrice=%s' % (MIN_PRICE, MAX_PRICE)
+ url3 = '&displayPropertyType=houses&oldDisplayPropertyType=houses&includeSSTC=true&_includeSSTC=on&googleAnalyticsChannel=buying'
+ #for station in stations:
     print 'Scraping %s' % station_name
     station_id = station.values()[0]
-    url1 = '/property-for-sale/find.html?locationIdentifier=STATION^%s&minPrice=%s&maxPrice=%s' % (station_id, MIN_PRICE, MAX_PRICE)
-    url2 = '&minBedrooms=%s&displayPropertyType=houses&oldDisplayPropertyType=houses&radius=%s' % (MIN_BEDROOMS, RADIUS_MILES)
+    
     # displayPropertyType=detachedshouses
-    INITIAL_URL = url1 + url2
-    scrape_results_page(INITIAL_URL, town=station_name, initial=True)
+    INITIAL_URL = url1 + url2 + URL3
+    print 'Scraping %s' % initial_url
+    scrape_results_page(INITIAL_URL, initial=True)
+       
