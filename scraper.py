@@ -159,6 +159,6 @@ url3 = '&displayPropertyType=houses&oldDisplayPropertyType=houses&includeSSTC=tr
 
 # displayPropertyType=detachedshouses
 INITIAL_URL = url1 + url2 + url3
-print 'Scraping %s' % initial_url
+print 'Scraping %s' % INITIAL_URL
 scrape_results_page(INITIAL_URL, initial=True)
        
