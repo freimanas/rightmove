@@ -153,15 +153,15 @@ scrape_individual_house('/property-for-sale/property-33036143.html/svr/3113','Ca
 #    INITIAL_URL = url1 + url2
 #    scrape_results_page(INITIAL_URL, town=station_name, initial=True)
  
-    url1 = '/property-for-sale/find.html?locationIdentifier=REGION%5E399&sortType=1&'
-    url2 = 'minPrice=%s&maxPrice=%s' % (MIN_PRICE, MAX_PRICE)
-    url3 = '&displayPropertyType=houses&oldDisplayPropertyType=houses&includeSSTC=true&_includeSSTC=on&googleAnalyticsChannel=buying'
+url1 = '/property-for-sale/find.html?locationIdentifier=REGION%5E399&sortType=1&'
+url2 = 'minPrice=%s&maxPrice=%s' % (MIN_PRICE, MAX_PRICE)
+url3 = '&displayPropertyType=houses&oldDisplayPropertyType=houses&includeSSTC=true&_includeSSTC=on&googleAnalyticsChannel=buying'
 
-    print 'Scraping %s' % station_name
-    station_id = station.values()[0]
+print 'Scraping %s' % station_name
+station_id = station.values()[0]
     
-    # displayPropertyType=detachedshouses
-    INITIAL_URL = url1 + url2 + URL3
-    print 'Scraping %s' % initial_url
-    scrape_results_page(INITIAL_URL, initial=True)
+# displayPropertyType=detachedshouses
+INITIAL_URL = url1 + url2 + URL3
+print 'Scraping %s' % initial_url
+scrape_results_page(INITIAL_URL, initial=True)
        
