@@ -57,8 +57,8 @@ stations = [ {'Nantwich':6473}, {'Chester':2024},
 {'Appledore': 266}, {'Estchingham': 3305},
 {'Chippenham': 2069} ]
 
-MIN_PRICE = 200000
-MAX_PRICE = 310000
+MIN_PRICE = 100000
+MAX_PRICE = 260000
 MIN_BEDROOMS = 2
 RADIUS_MILES = 3.0
 stop_phrases = [ "views over the garden",
