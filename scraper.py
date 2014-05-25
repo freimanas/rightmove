@@ -139,7 +139,7 @@ def scrape_results_page(results_url, initial=False):
         for r in results_links:
             scrape_results_page(r)
 
-scrape_individual_house('/property-for-sale/property-33036143.html/svr/3113','Castle Cary')
+#scrape_individual_house('/property-for-sale/property-33036143.html/svr/3113','Castle Cary')
 
 # Go through each station: scrape each set of results in turn. 
 
